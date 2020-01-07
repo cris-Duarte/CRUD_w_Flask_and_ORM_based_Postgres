@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Registro de Usuarios
+{% endblock %}
+{% block body %}
+  <div class="card border-light mb-4">
+    <div class="card-header">
+      Formulario de Registro de Usuario
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Nombre" id="fnombre" data-form="nombre" onfocus="this.value=''" required>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Apellido" id="fapellido" data-form="apellido" onfocus="this.value=''" required>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Número de CI" id="fci" data-form="ci" onfocus="this.value=''" required>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="email" placeholder="Correo Electrónico" id="femail" data-form="email" onfocus="this.value=''" required>
+        </div>
+        <div class="form-group">
+          <select class="form-control" id="ftipo" data-form="tipo">
+              {% for tipo in tipo_usuario %}
+                  <option value="{{ tipo.id }}">{{ tipo.descripcion }}</option>
+              {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input class="form-control" type="password" placeholder="Contraseña" id="fc" data-form="con" onfocus="this.value=''" required>
+        </div>
+
+        <button onclick="form1()" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+  <div>
+    <p id="mensaje" class="bg-info"></p>
+  </div>
+
+  {% endblock %}
