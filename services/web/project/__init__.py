@@ -3,10 +3,17 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=["POST" ,"GET"])
 def registrodeusuarios():
+    s_usuarios = False
+    if request.form.get('alta'):
+        u = Usuario(nombre=request.form.get('nombre'), apellido=request.form.get('apellido'), ci=int(request.form.get('ci')), email=request.form.get('email'), activo = True, con=request.form.get('con'), tipo=int(request.form.get('tipo')))
+        db.session.add(u)
+        db.session.commit()
+        s_usuarios = True
     tipo_usuario = TipoUsuario.query.all()
-    return render_template("registrodeusuarios.html", tipo_usuario=tipo_usuario)
+    usuarios = Usuario.query.all()
+    return render_template("registrodeusuarios.html", tipo_usuario=tipo_usuario, usuarios=usuarios, s_usuarios=s_usuarios)
 
 @app.route("/reciboregistro", methods=["POST" ,"GET"])
 def reciboregistro():

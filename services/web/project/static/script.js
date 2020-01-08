@@ -10,8 +10,9 @@ var form1 = function() {
     let e = document.getElementById('ftipo');
 
     data.append('tipo', e.options[e.selectedIndex].value);
+    data.append('alta',true);
 
-    request.open('POST', '/reciboregistro');
+    request.open('POST', '/');
 
     request.onload = () => {
       document.getElementById('mensaje').innerHTML = request.response;

@@ -4,6 +4,8 @@
   Registro de Usuarios
 {% endblock %}
 {% block body %}
+
+{% if not s_usuarios %}
   <div class="card border-light mb-4">
     <div class="card-header">
       Formulario de Registro de Usuario
@@ -36,8 +38,34 @@
         <button onclick="form1()" class="btn btn-primary">Enviar</button>
       </div>
     </div>
-  <div>
-    <p id="mensaje" class="bg-info"></p>
-  </div>
+  <div id="mensaje">
 
+{% endif %}
+
+    <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre y Apellido</th>
+        <th scope="col">Ci</th>
+        <th scope="col">Tipo de usuario</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for usuario in usuarios %}
+        <tr>
+          <th scope="row">{{ usuario.id }}</th>
+          <td>{{ usuario.nombre }} {{usuario.apellido}}</td>
+          <td>{{ usuario.ci }}</td>
+          <td>{{ usuario.tipo }}</td>
+        </tr>
+      {% else %}
+      <td> No hay usuarios </td>
+      {% endfor %}
+    </tbody>
+    </table>
+
+  {% if not s_usuarios %}
+    </div>
+  {% endif %}
   {% endblock %}
