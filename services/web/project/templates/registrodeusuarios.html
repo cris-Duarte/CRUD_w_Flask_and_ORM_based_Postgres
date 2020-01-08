@@ -49,6 +49,7 @@
         <th scope="col">Nombre y Apellido</th>
         <th scope="col">Ci</th>
         <th scope="col">Tipo de usuario</th>
+        <th scope="col">Modificar/Eliminar</th>
       </tr>
     </thead>
     <tbody>
@@ -58,6 +59,10 @@
           <td>{{ usuario.nombre }} {{usuario.apellido}}</td>
           <td>{{ usuario.ci }}</td>
           <td>{{ usuario.tipo }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" onclick='modificar({{usuario.id}})'>Modificar</button>
+            <button type="button" class="btn btn-danger" onclick='eliminar({{usuario.id}})''>Eliminar</button>
+          </td>
         </tr>
       {% else %}
       <td> No hay usuarios </td>

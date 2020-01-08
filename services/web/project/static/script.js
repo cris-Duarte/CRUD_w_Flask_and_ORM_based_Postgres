@@ -22,3 +22,18 @@ var form1 = function() {
     return false;
 
 };
+var eliminar = function(id) {
+  const request = new XMLHttpRequest();
+  const data = new FormData();
+  data.append('baja', true);
+  data.append('id',id);
+  request.open('POST', '/');
+
+  request.onload = () => {
+    document.getElementById('mensaje').innerHTML = request.response;
+  };
+  request.send(data);
+
+  return false;
+
+};

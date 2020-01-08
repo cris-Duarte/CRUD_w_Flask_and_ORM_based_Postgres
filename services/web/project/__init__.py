@@ -11,8 +11,13 @@ def registrodeusuarios():
         db.session.add(u)
         db.session.commit()
         s_usuarios = True
+    if request.form.get('baja'):
+        u = Usuario.query.get(int(request.form.get('id')))
+        u.activo = False
+        db.session.commit()
+        s_usuarios = True
     tipo_usuario = TipoUsuario.query.all()
-    usuarios = Usuario.query.all()
+    usuarios = Usuario.query.filter_by(activo=True).all()
     return render_template("registrodeusuarios.html", tipo_usuario=tipo_usuario, usuarios=usuarios, s_usuarios=s_usuarios)
 
 @app.route("/reciboregistro", methods=["POST" ,"GET"])
