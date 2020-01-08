@@ -6,6 +6,7 @@ app = Flask(__name__)
 @app.route("/", methods=["POST" ,"GET"])
 def registrodeusuarios():
     s_usuarios = False
+    up = False
     if request.form.get('alta'):
         u = Usuario(nombre=request.form.get('nombre'), apellido=request.form.get('apellido'), ci=int(request.form.get('ci')), email=request.form.get('email'), activo = True, con=request.form.get('con'), tipo=int(request.form.get('tipo')))
         db.session.add(u)
@@ -16,9 +17,21 @@ def registrodeusuarios():
         u.activo = False
         db.session.commit()
         s_usuarios = True
+    if request.form.get('modificacion'):
+        up = Usuario.query.get(int(request.form.get('id')))
+    if request.form.get('a_modificar') != None:
+        u = Usuario.query.get(request.form.get('a_modificar'))
+        u.nombre = request.form.get('nombre')
+        u.apellido = request.form.get('apellido')
+        u.ci = int(request.form.get('ci'))
+        u.email = request.form.get('email')
+        u.con = request.form.get('con')
+        u.tipo = int(request.form.get('tipo'))
+        db.session.commit()
+
     tipo_usuario = TipoUsuario.query.all()
     usuarios = Usuario.query.filter_by(activo=True).all()
-    return render_template("registrodeusuarios.html", tipo_usuario=tipo_usuario, usuarios=usuarios, s_usuarios=s_usuarios)
+    return render_template("registrodeusuarios.html", tipo_usuario=tipo_usuario, usuarios=usuarios, s_usuarios=s_usuarios, up=up)
 
 @app.route("/reciboregistro", methods=["POST" ,"GET"])
 def reciboregistro():

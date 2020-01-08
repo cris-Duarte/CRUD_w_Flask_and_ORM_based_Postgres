@@ -1,4 +1,4 @@
-var form1 = function() {
+var form1 = function(id) {
     const request = new XMLHttpRequest();
     const data = new FormData();
     data.append('nombre', document.getElementById('fnombre').value);
@@ -10,12 +10,19 @@ var form1 = function() {
     let e = document.getElementById('ftipo');
 
     data.append('tipo', e.options[e.selectedIndex].value);
-    data.append('alta',true);
-
+    if (id == null){
+      data.append('alta',true);
+    } else {
+      data.append('a_modificar',id);
+    }
     request.open('POST', '/');
-
     request.onload = () => {
-      document.getElementById('mensaje').innerHTML = request.response;
+      if (id != null){
+        document.getElementById('body').innerHTML = request.response;
+
+      } else {
+        document.getElementById('mensaje').innerHTML = request.response;
+      }
     };
     request.send(data);
 
@@ -36,4 +43,19 @@ var eliminar = function(id) {
 
   return false;
 
+};
+
+var modificar = function(id) {
+  const request = new XMLHttpRequest();
+  const data = new FormData();
+  data.append('modificacion', true);
+  data.append('id',id);
+  request.open('POST', '/');
+
+  request.onload = () => {
+    document.getElementById('body').innerHTML = request.response;
+  };
+  request.send(data);
+
+  return false;
 };
